@@ -2,10 +2,12 @@ import streamlit as st
 import yfinance as ticker_data
 import pandas as pd
 import numpy as np
-(page_title="쭈니형 대형주 스크리너", page_icon="📈", layout="wide")
+
+# 페이지 설정
+st.set_page_config(page_title="쭈니형 대형주 스크리너", page_icon="📈", layout="wide")
 
 st.title("📈 쭈니형 대형주 전용 수급·차트·뉴스 통합 스크리너")
-st.caption("시가총액 1조 이상 우량주 중 거래량 50% 이상 유입 및 수급 유망 종목을 포착합니다.")
+st.caption("시가총액 1조 이상 우량주 중 거래량 10% 이상 유입 및 수급 유망 종목을 포착합니다.")
 
 # 1. 모니터링 대상 대형주 목록 (시총 1조 이상 주요 우량주)
 LARGE_CAPS = {
@@ -51,8 +53,8 @@ def fetch_screened_stocks():
             # 20일 평균 대비 거래량 증가율 (%)
             vol_increase_pct = ((curr_vol - avg_vol_20) / avg_vol_20) * 100
             
-            # 1차 포착 조건: 20일 평균 거래량 대비 50% 이상 증가
-            if vol_increase_pct >= 50:
+            # 1차 포착 조건: 20일 평균 거래량 대비 10% 이상 증가
+            if vol_increase_pct >= 10:
                 # 거래대금 계산 (억 원 단위)
                 trading_value_100m = (curr_price * curr_vol) / 100000000
                 
@@ -68,7 +70,7 @@ def fetch_screened_stocks():
                     score += 30
                 elif vol_increase_pct >= 150:
                     score += 20
-                elif vol_increase_pct >= 100:
+                elif vol_increase_pct >= 50:
                     score += 10
                     
                 # 가산점 2: 거래대금 규모 (최대 20점)
@@ -118,4 +120,4 @@ if not df_result.empty:
     st.subheader("📋 실시간 포착 대형주 순위 (점수순)")
     st.dataframe(df_result, use_container_width=True)
 else:
-    st.info("현재 20일 평균 대비 거래량이 50% 이상 유입된 대형주가 없습니다.")
+    st.info("현재 20일 평균 대비 거래량이 10% 이상 유입된 대형주가 없습니다.")

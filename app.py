@@ -2,9 +2,7 @@ import streamlit as st
 import yfinance as ticker_data
 import pandas as pd
 import numpy as np
-
-# 페이지 설정
-st.set_page_config(page_title="쭈니형 대형주 스크리너", page_icon="📈", layout="wide")
+(page_title="쭈니형 대형주 스크리너", page_icon="📈", layout="wide")
 
 st.title("📈 쭈니형 대형주 전용 수급·차트·뉴스 통합 스크리너")
 st.caption("시가총액 1조 이상 우량주 중 거래량 50% 이상 유입 및 수급 유망 종목을 포착합니다.")
